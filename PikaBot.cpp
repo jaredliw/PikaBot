@@ -37,6 +37,11 @@ bool PikaBot::detectLine(IR sensor)
     }
 }
 
+bool PikaBot::isPressed()
+{
+    return digitalRead(BUTTON) == LOW;
+}
+
 void PikaBot::lineFollow()
 {
     if (!this->detectLine(LeftIR) && !this->detectLine(RightIR))
@@ -56,6 +61,67 @@ void PikaBot::lineFollow()
     }
 }
 
+void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
+{
+    if (leftSpeed > 255)
+    {
+        leftSpeed = 255;
+    }
+    else if (leftSpeed < -255)
+    {
+        leftSpeed = -255;
+    }
+    if (rightSpeed > 255)
+    {
+        rightSpeed = 255
+    }
+    else if (rightSpeed < -255)
+    {
+        rightSpeed = -255
+    }
+
+    if (leftSpeed >= 0)
+    {
+        analogWrite(LEFT_FORWARD, leftSpeed);
+    }
+    else
+    {
+        analogWrite(LEFT_BACKWARD, leftSpeed);
+    }
+    if (rightSpeed >= 0)
+    {
+        analogWrite(RIGHT_FORWARD, rightSpeed);
+    }
+    else
+    {
+        analogWrite(RIGHT_BACKWARD, rightSpeed);
+    }
+}
+
+void PikaBot::moveBackward(uint8_t speed)
+{
+    analogWrite(LEFT_BACKWARD, speed);
+    analogWrite(RIGHT_BACKWARD, speed);
+}
+
+void PikaBot::moveForward(uint8_t speed)
+{
+    analogWrite(LEFT_FORWARD, speed);
+    analogWrite(RIGHT_FORWARD, speed);
+}
+
+void PikaBot::turnLeft(uint8_t speed)
+{
+    analogWrite(LEFT_FORWARD, speed);
+    analogWrite(RIGHT_BACKWARD, speed);
+}
+
+void PikaBot::turnRight(uint8_t speed)
+{
+    analogWrite(LEFT_BACKWARD, speed);
+    analogWrite(RIGHT_FORWARD, speed);
+}
+
 uint16_t PikaBot::ultrasonicDistance()
 {
     digitalWrite(ULTRASONIC_TRIG, LOW);
@@ -67,7 +133,8 @@ uint16_t PikaBot::ultrasonicDistance()
     if (distance > 2000)
     {
         return 0;
-    } else
+    }
+    else
     {
         return distance;
     }
