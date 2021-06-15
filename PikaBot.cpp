@@ -32,6 +32,8 @@ bool PikaBot::detectLine(IR sensor)
         return digitalRead(LEFT_IR) == HIGH;
     case RightIR:
         return digitalRead(RIGHT_IR) == HIGH;
+    default:
+        return false;
     }
 }
 
@@ -51,5 +53,22 @@ void PikaBot::lineFollow()
     {
         analogWrite(LEFT_FORWARD, 255);
         analogWrite(RIGHT_FORWARD, -255);
+    }
+}
+
+uint16_t PikaBot::ultrasonicDistance()
+{
+    digitalWrite(ULTRASONIC_TRIG, LOW);
+    delayMicroseconds(2);
+    digitalWrite(ULTRASONIC_TRIG, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(ULTRASONIC_TRIG, LOW);
+    uint16_t distance = pulseIn(ULTRASONIC_ECHO, HIGH) * 0.017;
+    if (distance > 2000)
+    {
+        return 0;
+    } else
+    {
+        return distance;
     }
 }

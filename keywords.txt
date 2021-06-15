@@ -1,6 +1,8 @@
 PikaBot KEYWORD3
 
+detectLine KEYWORD2
 lineFollow KEYWORD2
+ultrasonicDistance KEYWORD2
 
 LeftIR LITERAL1
 RightIR LITERAL1

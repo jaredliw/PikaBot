@@ -2,7 +2,6 @@
 #define PikaBot_h
 
 #include <Arduino.h>
-#include <stdint.h>
 
 enum IR
 {
@@ -16,6 +15,7 @@ public:
     PikaBot(void);
     bool detectLine(IR sensor);
     void lineFollow();
+    uint16_t ultrasonicDistance();
 };
 
 #endif
