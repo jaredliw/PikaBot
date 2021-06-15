@@ -4,10 +4,18 @@
 #include <Arduino.h>
 #include <stdint.h>
 
-class PikaBot {
-    public:
-        PikaBot(void);
-        void lineFollow();
+enum IR
+{
+    LeftIR,
+    RightIR,
+};
+
+class PikaBot
+{
+public:
+    PikaBot(void);
+    bool detectLine(IR sensor);
+    void lineFollow();
 };
 
 #endif

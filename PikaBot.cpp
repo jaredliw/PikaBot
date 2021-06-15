@@ -11,7 +11,8 @@
 # define LEFT_IR A0
 # define RIGHT_IR A1
 
-PikaBot::PikaBot(void) {
+PikaBot::PikaBot(void)
+{
     pinMode(BUTTON, INPUT_PULLUP);
     pinMode(BUZZER, OUTPUT);
     pinMode(LEFT_FORWARD, OUTPUT);
@@ -23,14 +24,31 @@ PikaBot::PikaBot(void) {
     pinMode(RIGHT_IR, INPUT);
 }
 
-void PikaBot::lineFollow() {
-    if (digitalRead(LEFT_IR) == LOW && digitalRead(RIGHT_IR) == LOW) {
+bool PikaBot::detectLine(IR sensor)
+{
+    switch (sensor)
+    {
+    case LeftIR:
+        return digitalRead(LEFT_IR) == HIGH;
+    case RightIR:
+        return digitalRead(RIGHT_IR) == HIGH;
+    }
+}
+
+void PikaBot::lineFollow()
+{
+    if (!this->detectLine(LeftIR) && !this->detectLine(RightIR))
+    {
         analogWrite(LEFT_FORWARD, 255);
         analogWrite(RIGHT_FORWARD, 255);
-    } else if (digitalRead(LEFT_IR) == HIGH) {
+    }
+    else if (this->detectLine(LeftIR))
+    {
         analogWrite(LEFT_FORWARD, -255);
         analogWrite(RIGHT_FORWARD, 255);
-    } else if (digitalRead(RIGHT_IR) == HIGH) {
+    }
+    else if (this->detectLine(RightIR))
+    {
         analogWrite(LEFT_FORWARD, 255);
         analogWrite(RIGHT_FORWARD, -255);
     }

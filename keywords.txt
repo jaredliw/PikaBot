@@ -1,3 +1,6 @@
 PikaBot KEYWORD3
 
 lineFollow KEYWORD2
+
+LeftIR LITERAL1
+RightIR LITERAL1
