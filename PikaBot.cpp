@@ -80,7 +80,12 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
         rightSpeed = -255;
     }
 
-    if (leftSpeed >= 0)
+    if (leftSpeed == 0)
+    {
+        analogWrite(LEFT_FORWARD, 0);
+        analogWrite(LEFT_BACKWARD, 0);
+    }
+    else if (leftSpeed > 0)
     {
         analogWrite(LEFT_FORWARD, leftSpeed);
     }
@@ -88,7 +93,13 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
     {
         analogWrite(LEFT_BACKWARD, leftSpeed);
     }
-    if (rightSpeed >= 0)
+
+    if (rightSpeed == 0)
+    {
+        analogWrite(RIGHT_FORWARD, 0);
+        analogWrite(RIGHT_BACKWARD, 0);
+    }
+    else if (rightSpeed >= 0)
     {
         analogWrite(RIGHT_FORWARD, rightSpeed);
     }
@@ -100,34 +111,27 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
 
 void PikaBot::moveBackward(uint8_t speed)
 {
-    analogWrite(LEFT_BACKWARD, speed);
-    analogWrite(RIGHT_BACKWARD, speed);
+    this->move(-speed, -speed);
 }
 
 void PikaBot::moveForward(uint8_t speed)
 {
-    analogWrite(LEFT_FORWARD, speed);
-    analogWrite(RIGHT_FORWARD, speed);
+    this->move(speed, speed);
 }
 
 void PikaBot::stop()
 {
-    analogWrite(LEFT_FORWARD, 0);
-    analogWrite(RIGHT_FORWARD, 0);
-    analogWrite(LEFT_BACKWARD, 0);
-    analogWrite(RIGHT_BACKWARD, 0);
+    this.move(0, 0);
 }
 
 void PikaBot::turnLeft(uint8_t speed)
 {
-    analogWrite(LEFT_FORWARD, speed);
-    analogWrite(RIGHT_BACKWARD, speed);
+    this->move(speed, -speed);
 }
 
 void PikaBot::turnRight(uint8_t speed)
 {
-    analogWrite(LEFT_BACKWARD, speed);
-    analogWrite(RIGHT_FORWARD, speed);
+    this->move(-speed, speed);
 }
 
 uint16_t PikaBot::ultrasonicDistance()
