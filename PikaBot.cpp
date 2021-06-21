@@ -73,11 +73,11 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
     }
     if (rightSpeed > 255)
     {
-        rightSpeed = 255
+        rightSpeed = 255;
     }
     else if (rightSpeed < -255)
     {
-        rightSpeed = -255
+        rightSpeed = -255;
     }
 
     if (leftSpeed >= 0)
@@ -108,6 +108,14 @@ void PikaBot::moveForward(uint8_t speed)
 {
     analogWrite(LEFT_FORWARD, speed);
     analogWrite(RIGHT_FORWARD, speed);
+}
+
+void PikaBot::stop()
+{
+    analogWrite(LEFT_FORWARD, 0);
+    analogWrite(RIGHT_FORWARD, 0);
+    analogWrite(LEFT_BACKWARD, 0);
+    analogWrite(RIGHT_BACKWARD, 0);
 }
 
 void PikaBot::turnLeft(uint8_t speed)

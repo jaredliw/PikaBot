@@ -6,6 +6,7 @@ lineFollow KEYWORD2
 move KEYWORD2
 moveBackward KEYWORD2
 moveForward KEYWORD2
+stop KEYWORD2
 turnLeft KEYWORD2
 turnRight KEYWORD2
 ultrasonicDistance KEYWORD2
