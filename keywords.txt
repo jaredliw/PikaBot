@@ -1,5 +1,6 @@
 PikaBot KEYWORD3
 
+calibrateMotors KEYWORD2
 detectLine KEYWORD2
 isPressed KEYWORD2
 lineFollow KEYWORD2

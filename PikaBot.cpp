@@ -24,6 +24,22 @@ PikaBot::PikaBot(void)
     pinMode(RIGHT_IR, INPUT);
 }
 
+void PikaBot::_delayMotors(uint8_t speed, uint8_t distance)
+{
+    if (distance > 0)
+    {
+        delay((int) round((float) distance / this->_distanceRef * speed / this->_speedRef * this->_delayRef));
+        this->stop();
+    }
+}
+
+void PikaBot::calibrateMotors(uint8_t speed, uint16_t delay, uint8_t distance)
+{
+    this->_speedRef = speed;
+    this->_delayRef = delay;
+    this->_distanceRef = distance;
+}
+
 bool PikaBot::detectLine(IR sensor)
 {
     switch (sensor)
@@ -91,7 +107,7 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
     }
     else
     {
-        analogWrite(LEFT_BACKWARD, leftSpeed);
+        analogWrite(LEFT_BACKWARD, abs(leftSpeed));
     }
 
     if (rightSpeed == 0)
@@ -99,29 +115,31 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
         analogWrite(RIGHT_FORWARD, 0);
         analogWrite(RIGHT_BACKWARD, 0);
     }
-    else if (rightSpeed >= 0)
+    else if (rightSpeed > 0)
     {
         analogWrite(RIGHT_FORWARD, rightSpeed);
     }
     else
     {
-        analogWrite(RIGHT_BACKWARD, rightSpeed);
+        analogWrite(RIGHT_BACKWARD, abs(rightSpeed));
     }
 }
 
-void PikaBot::moveBackward(uint8_t speed)
+void PikaBot::moveBackward(uint8_t speed, uint8_t distance)
 {
     this->move(-speed, -speed);
+    this->_delayMotors(speed, distance);
 }
 
-void PikaBot::moveForward(uint8_t speed)
+void PikaBot::moveForward(uint8_t speed, uint8_t distance)
 {
     this->move(speed, speed);
+    this->_delayMotors(speed, distance);
 }
 
 void PikaBot::stop()
 {
-    this.move(0, 0);
+    this->move(0, 0);
 }
 
 void PikaBot::turnLeft(uint8_t speed)
