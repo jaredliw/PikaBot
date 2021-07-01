@@ -4,7 +4,7 @@ calibrateMotors KEYWORD2
 detectLine KEYWORD2
 isPressed KEYWORD2
 lineFollow KEYWORD2
-move KEYWORD2
+move KEYWORD2 KEYWORD2
 moveBackward KEYWORD2
 moveForward KEYWORD2
 stop KEYWORD2

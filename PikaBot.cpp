@@ -58,22 +58,19 @@ bool PikaBot::isPressed()
     return digitalRead(BUTTON) == LOW;
 }
 
-void PikaBot::lineFollow()
+void PikaBot::lineFollow(uint8_t speed)
 {
     if (!this->detectLine(LeftIR) && !this->detectLine(RightIR))
     {
-        analogWrite(LEFT_FORWARD, 255);
-        analogWrite(RIGHT_FORWARD, 255);
+        this->moveForward(speed);
     }
     else if (this->detectLine(LeftIR))
     {
-        analogWrite(LEFT_FORWARD, -255);
-        analogWrite(RIGHT_FORWARD, 255);
+        this->turnLeft(speed)
     }
     else if (this->detectLine(RightIR))
     {
-        analogWrite(LEFT_FORWARD, 255);
-        analogWrite(RIGHT_FORWARD, -255);
+        this->turnRight(speed)
     }
 }
 
@@ -125,15 +122,25 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
     }
 }
 
-void PikaBot::moveBackward(uint8_t speed, uint8_t distance)
+void PikaBot::moveBackward(uint8_t speed)
 {
     this->move(-speed, -speed);
+}
+
+void PikaBot::moveBackward(uint8_t speed, uint8_t distance)
+{
+    this->moveBackward(speed);
     this->_delayMotors(speed, distance);
+}
+
+void PikaBot::moveForward(uint8_t speed)
+{
+    this->move(speed, speed);
 }
 
 void PikaBot::moveForward(uint8_t speed, uint8_t distance)
 {
-    this->move(speed, speed);
+    this.moveForward(speed);
     this->_delayMotors(speed, distance);
 }
 

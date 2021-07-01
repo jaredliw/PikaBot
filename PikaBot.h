@@ -16,9 +16,11 @@ public:
     void calibrateMotors(uint8_t speed, uint16_t delay, uint8_t distance);
     bool detectLine(IR sensor);
     bool isPressed();
-    void lineFollow();
+    void lineFollow(uint8_t speed);
     void move(int16_t leftSpeed, int16_t rightSpeed);
+    void moveBackward(uint8_t speed);
     void moveBackward(uint8_t speed, uint8_t distance);
+    void moveForward(uint8_t speed);
     void moveForward(uint8_t speed, uint8_t distance);
     void stop();
     void turnLeft(uint8_t speed);
