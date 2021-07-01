@@ -11,6 +11,8 @@
 # define LEFT_IR A0
 # define RIGHT_IR A1
 
+# define DELAY 50
+
 PikaBot::PikaBot(void)
 {
     pinMode(BUTTON, INPUT_PULLUP);
@@ -66,16 +68,17 @@ void PikaBot::lineFollow(uint8_t speed)
     }
     else if (this->detectLine(LeftIR))
     {
-        this->turnLeft(speed)
+        this->turnLeft(speed);
     }
     else if (this->detectLine(RightIR))
     {
-        this->turnRight(speed)
+        this->turnRight(speed);
     }
 }
 
 void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
 {
+    while (this->lastMotorInstructionTime != 0 and millis() < lastMotorInstructionTime + DELAY) {}
     if (leftSpeed > 255)
     {
         leftSpeed = 255;
@@ -120,6 +123,7 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
     {
         analogWrite(RIGHT_BACKWARD, abs(rightSpeed));
     }
+    lastMotorInstructionTime = millis();
 }
 
 void PikaBot::moveBackward(uint8_t speed)
@@ -140,7 +144,7 @@ void PikaBot::moveForward(uint8_t speed)
 
 void PikaBot::moveForward(uint8_t speed, uint8_t distance)
 {
-    this.moveForward(speed);
+    this->moveForward(speed);
     this->_delayMotors(speed, distance);
 }
 

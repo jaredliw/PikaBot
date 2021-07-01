@@ -31,6 +31,7 @@ private:
     uint16_t _delayRef = 500;
     uint8_t _distanceRef = 25;
     uint8_t _speedRef = 255;
+    unsigned long lastMotorInstructionTime = 0;
     void _delayMotors(uint8_t speed, uint8_t distance);
 };
 
