@@ -57,7 +57,14 @@ bool PikaBot::detectLine(IR sensor)
 
 bool PikaBot::isPressed()
 {
-    return digitalRead(BUTTON) == LOW;
+    // Return true only when the button is pressed and released within 1 second
+    if (digitalRead(BUTTON) == HIGH)
+    {
+        return pulseIn(BUTTON, LOW, 1_000_000) != 0;
+    } else
+    {
+        return false;
+    }
 }
 
 void PikaBot::lineFollow(uint8_t speed)
