@@ -64,7 +64,8 @@ bool PikaBot::isPressed()
     if (digitalRead(BUTTON) == HIGH)
     {
         return pulseIn(BUTTON, LOW, 1000000) != 0;
-    } else
+    }
+    else
     {
         return false;
     }
@@ -156,6 +157,49 @@ void PikaBot::moveForward(uint8_t speed, uint8_t distance)
 {
     this->moveForward(speed);
     this->_delayMotors(speed, distance);
+}
+
+void PikaBot::playTone(uint16_t freq, unsigned long duration)
+{
+    double multiplier;
+    switch (duration)
+    {
+    case Whole:
+        multiplier = 4.;
+        break;
+    case Half:
+        multiplier = 2.;
+        break;
+    case Quarter:
+        multiplier = 1.;
+        break;
+    case Eighth:
+        multiplier = 0.5;
+        break;
+    case Sixteenth:
+        multiplier = 0.25;
+        break;
+    case Double:
+        multiplier = 0.125;
+        break;
+    case Breve:
+        multiplier = 0.0625;
+        break;
+    default:
+        multiplier = 0;
+    }
+    if (multiplier != 0)
+    {
+        duration = (double) 60000 / this->tempo * multiplier;
+    }
+    tone(BUZZER, freq, duration);
+    delay(duration * 1.3);
+    noTone(BUZZER);
+}
+
+void PikaBot::setTempo(uint8_t tempo)
+{
+    this->tempo = tempo;
 }
 
 void PikaBot::stop()

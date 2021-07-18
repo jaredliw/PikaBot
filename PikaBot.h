@@ -2,6 +2,18 @@
 #define PikaBot_h
 
 #include <Arduino.h>
+#include <pitches.h>
+
+enum Duration
+{
+    Whole,
+    Half,
+    Quarter,
+    Eighth,
+    Sixteenth,
+    Double,
+    Breve,
+};
 
 enum IR
 {
@@ -13,6 +25,7 @@ class PikaBot
 {
 public:
     PikaBot(void);
+    uint16_t tempo = 100;
     void calibrateMotors(uint8_t speed, uint16_t delay, uint8_t distance);
     bool detectLine(IR sensor);
     bool isPressed();
@@ -22,6 +35,8 @@ public:
     void moveBackward(uint8_t speed, uint8_t distance);
     void moveForward(uint8_t speed);
     void moveForward(uint8_t speed, uint8_t distance);
+    void playTone(uint16_t freq, unsigned long note);
+    void setTempo(uint8_t tempo);
     void stop();
     void turnLeft(uint8_t speed);
     void turnLeft(uint8_t speed, uint8_t angle);
