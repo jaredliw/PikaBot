@@ -12,6 +12,7 @@
 # define RIGHT_IR A1
 
 # define DELAY 50
+# define DIAMETER 15
 
 PikaBot::PikaBot(void)
 {
@@ -26,12 +27,14 @@ PikaBot::PikaBot(void)
     pinMode(RIGHT_IR, INPUT);
 }
 
-void PikaBot::_delayMotors(uint8_t speed, uint8_t distance)
+void PikaBot::_delayMotors(uint8_t speed, double distance)
 {
     if (distance > 0)
     {
-        delay((int) round((float) distance / this->_distanceRef * speed / this->_speedRef * this->_delayRef));
+        delay((int) round((double) distance / this->_distanceRef * speed / this->_speedRef * this->_delayRef));
         this->stop();
+        Serial.begin(9600);
+        Serial.println((int) round((double) distance / this->_distanceRef * speed / this->_speedRef * this->_delayRef));
     }
 }
 
@@ -60,7 +63,7 @@ bool PikaBot::isPressed()
     // Return true only when the button is pressed and released within 1 second
     if (digitalRead(BUTTON) == HIGH)
     {
-        return pulseIn(BUTTON, LOW, 1_000_000) != 0;
+        return pulseIn(BUTTON, LOW, 1000000) != 0;
     } else
     {
         return false;
@@ -165,9 +168,21 @@ void PikaBot::turnLeft(uint8_t speed)
     this->move(speed, -speed);
 }
 
+void PikaBot::turnLeft(uint8_t speed, uint8_t angle)
+{
+    this->turnLeft(speed);
+    this->_delayMotors(speed, PI * DIAMETER * angle / 360);
+}
+
 void PikaBot::turnRight(uint8_t speed)
 {
     this->move(-speed, speed);
+}
+
+void PikaBot::turnRight(uint8_t speed, uint8_t angle)
+{
+    this->turnRight(speed);
+    this->_delayMotors(speed, PI * DIAMETER * angle / 360);
 }
 
 uint16_t PikaBot::ultrasonicDistance()

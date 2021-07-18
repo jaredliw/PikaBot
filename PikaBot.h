@@ -24,7 +24,9 @@ public:
     void moveForward(uint8_t speed, uint8_t distance);
     void stop();
     void turnLeft(uint8_t speed);
+    void turnLeft(uint8_t speed, uint8_t angle);
     void turnRight(uint8_t speed);
+    void turnRight(uint8_t speed, uint8_t angle);
     uint16_t ultrasonicDistance();
 
 private:
@@ -32,7 +34,7 @@ private:
     uint8_t _distanceRef = 25;
     uint8_t _speedRef = 255;
     unsigned long lastMotorInstructionTime = 0;
-    void _delayMotors(uint8_t speed, uint8_t distance);
+    void _delayMotors(uint8_t speed, double distance);
 };
 
 #endif
