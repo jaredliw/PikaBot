@@ -2,17 +2,16 @@
 #define PikaBot_h
 
 #include <Arduino.h>
-#include <pitches.h>
 
 enum Duration
 {
-    WHOLE,
-    HALF,
-    QUARTER,
-    EIGHTH,
-    SIXTEENTH,
-    DOUBLE,
-    BREVE,
+    WHOLE = 1,
+    HALF = 2,
+    QUARTER = 4,
+    EIGHTH = 8,
+    SIXTEENTH = 16,
+    DOUBLE = 32,
+    BREVE = 64,
 };
 
 enum IR
@@ -37,8 +36,8 @@ public:
     void moveBackward(uint8_t speed, uint8_t distance);
     void moveForward(uint8_t speed);
     void moveForward(uint8_t speed, uint8_t distance);
-    void playTone(uint16_t freq, unsigned long note);
-    void setTempo(uint8_t tempo);
+    void playTone(String pitch, uint8_t note);
+    void playToneMs(String pitch, unsigned long duration);
     void stop();
     void turnLeft(uint8_t speed);
     void turnLeft(uint8_t speed, uint8_t angle);

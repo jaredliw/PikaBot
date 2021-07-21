@@ -1,18 +1,18 @@
-# include "PikaBot.h"
+#include "PikaBot.h"
 
-# define BUTTON 2
-# define BUZZER 8
-# define LEFT_FORWARD 11
-# define LEFT_BACKWARD 10
-# define RIGHT_FORWARD 9
-# define RIGHT_BACKWARD 3
-# define ULTRASONIC_TRIG 5
-# define ULTRASONIC_ECHO 4
-# define LEFT_IR A0
-# define RIGHT_IR A1
+#define BUTTON 2
+#define BUZZER 8
+#define LEFT_FORWARD 11
+#define LEFT_BACKWARD 10
+#define RIGHT_FORWARD 9
+#define RIGHT_BACKWARD 3
+#define ULTRASONIC_TRIG 5
+#define ULTRASONIC_ECHO 4
+#define LEFT_IR A0
+#define RIGHT_IR A1
 
-# define DELAY 50
-# define DIAMETER 15
+#define DELAY 50
+#define DIAMETER 15
 
 int pitchToFreq(String pitch)
 {
@@ -205,47 +205,17 @@ void PikaBot::moveForward(uint8_t speed, uint8_t distance)
     this->_delayMotors(speed, distance);
 }
 
-void PikaBot::playTone(uint16_t freq, unsigned long duration)
+void PikaBot::playTone(String pitch, uint8_t note)
 {
-    double multiplier;
-    switch (duration)
-    {
-    case Whole:
-        multiplier = 4.;
-        break;
-    case Half:
-        multiplier = 2.;
-        break;
-    case Quarter:
-        multiplier = 1.;
-        break;
-    case Eighth:
-        multiplier = 0.5;
-        break;
-    case Sixteenth:
-        multiplier = 0.25;
-        break;
-    case Double:
-        multiplier = 0.125;
-        break;
-    case Breve:
-        multiplier = 0.0625;
-        break;
-    default:
-        multiplier = 0;
-    }
-    if (multiplier != 0)
-    {
-        duration = (double) 60000 / this->tempo * multiplier;
-    }
+    this->playToneMs(pitch, round(240000. / this->tempo / note));
+}
+
+void PikaBot::playToneMs(String pitch, unsigned long duration)
+{
+    int freq = pitchToFreq(pitch);
     tone(BUZZER, freq, duration);
     delay(duration * 1.3);
     noTone(BUZZER);
-}
-
-void PikaBot::setTempo(uint8_t tempo)
-{
-    this->tempo = tempo;
 }
 
 void PikaBot::stop()
