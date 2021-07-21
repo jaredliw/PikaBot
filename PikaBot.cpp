@@ -12,7 +12,7 @@
 #define RIGHT_IR A1
 
 #define DELAY 50
-#define DIAMETER 15
+#define WIDTH 15
 
 int pitchToFreq(String pitch)
 {
@@ -210,9 +210,11 @@ void PikaBot::play(String musicSheet)
     musicSheet += ' ';
     int lastSpacePos = -1;
     int lastNote = QUARTER;
-    while (true) {
+    while (true)
+    {
         int spacePos = musicSheet.indexOf(' ', lastSpacePos + 1);
-        if (spacePos == -1) {
+        if (spacePos == -1)
+        {
             break;
         }
         int colonPos = musicSheet.indexOf(':', lastSpacePos + 1);
@@ -222,14 +224,16 @@ void PikaBot::play(String musicSheet)
         {
             pitch = musicSheet.substring(lastSpacePos + 1, colonPos);
             note = musicSheet.substring(colonPos + 1, spacePos);
-        } else
+        }
+        else
         {
             pitch = musicSheet.substring(lastSpacePos + 1, spacePos);
             note = String(lastNote);
         }
         int intNote = note.toInt();
         lastSpacePos = spacePos;
-        if ((!String(intNote).equals(note)) || intNote <= 0) {
+        if ((!String(intNote).equals(note)) || intNote <= 0)
+        {
             continue;
         }
         this->playTone(pitch, intNote);
@@ -257,13 +261,13 @@ void PikaBot::stop()
 
 void PikaBot::turnLeft(uint8_t speed)
 {
-    this->move(speed, -speed);
+    this->move(speed, 0);
 }
 
 void PikaBot::turnLeft(uint8_t speed, uint8_t angle)
 {
     this->turnLeft(speed);
-    this->_delayMotors(speed, PI * DIAMETER * angle / 360);
+    this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
 }
 
 void PikaBot::turnRight(uint8_t speed)
@@ -274,7 +278,7 @@ void PikaBot::turnRight(uint8_t speed)
 void PikaBot::turnRight(uint8_t speed, uint8_t angle)
 {
     this->turnRight(speed);
-    this->_delayMotors(speed, PI * DIAMETER * angle / 360);
+    this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
 }
 
 uint16_t PikaBot::ultrasonicDistance()
