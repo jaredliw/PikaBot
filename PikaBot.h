@@ -21,11 +21,13 @@ enum IR
     RightIR,
 };
 
+int pitchToFreq(String pitch);
+
 class PikaBot
 {
 public:
     PikaBot(void);
-    uint16_t tempo = 100;
+    uint16_t tempo = 120;
     void calibrateMotors(uint8_t speed, uint16_t delay, uint8_t distance);
     bool detectLine(IR sensor);
     bool isPressed();

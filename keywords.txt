@@ -1,5 +1,6 @@
-PikaBot	KEYWORD3
+PikaBot	KEYWORD1
 
+pitchToFreq	KEYWORD2
 calibrateMotors	KEYWORD2
 detectLine	KEYWORD2
 isPressed	KEYWORD2

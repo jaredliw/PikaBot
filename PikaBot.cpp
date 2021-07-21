@@ -14,6 +14,55 @@
 # define DELAY 50
 # define DIAMETER 15
 
+int pitchToFreq(String pitch)
+{
+    auto l = pitch.length();
+    if (l < 1 || l > 3)
+    {
+        return -1;
+    }
+    String firstChar = pitch.substring(0, 1);
+    firstChar.toUpperCase();
+    pitch = firstChar + pitch.substring(1);
+    if (pitch.equals("R"))
+    {
+        return 0;
+    }
+    const String pitches[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+    int octave;
+    int lastCharPos = l - 1;
+    if (isDigit(pitch[lastCharPos]))
+    {
+        octave = String(pitch[lastCharPos]).toInt();
+        pitch = pitch.substring(0, lastCharPos);
+        if (0 > octave || octave > 8)
+        {
+            return -1;
+        }
+    }
+    else
+    {
+        octave = 4;
+    }
+    const String replaceWith[] = {"Db", "C#", "Eb", "D#", "Gb", "F#", "Ab", "G#", "Bb", "A#"};
+    for (int i = 0; i < 10; i += 2)
+    {
+        if (replaceWith[i] == pitch)
+        {
+            pitch = replaceWith[i + 1];
+        }
+    }
+    for (int idx = 0; idx < 12; idx++)
+    {
+        if (pitches[idx].equals(pitch))
+        {
+            int freq = round(27.5 * pow(2, (double) (12 * octave + idx - 9) / 12));
+            return freq;
+        }
+    }
+    return -1;
+}
+
 PikaBot::PikaBot(void)
 {
     pinMode(BUTTON, INPUT_PULLUP);
@@ -33,8 +82,6 @@ void PikaBot::_delayMotors(uint8_t speed, double distance)
     {
         delay((int) round((double) distance / this->_distanceRef * speed / this->_speedRef * this->_delayRef));
         this->stop();
-        Serial.begin(9600);
-        Serial.println((int) round((double) distance / this->_distanceRef * speed / this->_speedRef * this->_delayRef));
     }
 }
 
@@ -60,7 +107,6 @@ bool PikaBot::detectLine(IR sensor)
 
 bool PikaBot::isPressed()
 {
-    // Return true only when the button is pressed and released within 1 second
     if (digitalRead(BUTTON) == HIGH)
     {
         return pulseIn(BUTTON, LOW, 1000000) != 0;
