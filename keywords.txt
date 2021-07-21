@@ -8,6 +8,7 @@ lineFollow	KEYWORD2
 move	KEYWORD2
 moveBackward	KEYWORD2
 moveForward	KEYWORD2
+play	KEYWORD2
 playTone	KEYWORD2
 playToneMs	KEYWORD2
 setTempo	KEYWORD2

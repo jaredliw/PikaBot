@@ -205,6 +205,38 @@ void PikaBot::moveForward(uint8_t speed, uint8_t distance)
     this->_delayMotors(speed, distance);
 }
 
+void PikaBot::play(String musicSheet)
+{
+    musicSheet += ' ';
+    int lastSpacePos = -1;
+    int lastNote = QUARTER;
+    while (true) {
+        int spacePos = musicSheet.indexOf(' ', lastSpacePos + 1);
+        if (spacePos == -1) {
+            break;
+        }
+        int colonPos = musicSheet.indexOf(':', lastSpacePos + 1);
+        String pitch;
+        String note;
+        if (colonPos != -1 && colonPos < spacePos)
+        {
+            pitch = musicSheet.substring(lastSpacePos + 1, colonPos);
+            note = musicSheet.substring(colonPos + 1, spacePos);
+        } else
+        {
+            pitch = musicSheet.substring(lastSpacePos + 1, spacePos);
+            note = String(lastNote);
+        }
+        int intNote = note.toInt();
+        lastSpacePos = spacePos;
+        if ((!String(intNote).equals(note)) || intNote <= 0) {
+            continue;
+        }
+        this->playTone(pitch, intNote);
+        lastNote = intNote;
+    }
+}
+
 void PikaBot::playTone(String pitch, uint8_t note)
 {
     this->playToneMs(pitch, round(240000. / this->tempo / note));

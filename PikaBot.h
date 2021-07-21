@@ -36,6 +36,7 @@ public:
     void moveBackward(uint8_t speed, uint8_t distance);
     void moveForward(uint8_t speed);
     void moveForward(uint8_t speed, uint8_t distance);
+    void play(String musicSheet);
     void playTone(String pitch, uint8_t note);
     void playToneMs(String pitch, unsigned long duration);
     void stop();
