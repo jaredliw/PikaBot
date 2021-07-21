@@ -96,9 +96,9 @@ bool PikaBot::detectLine(IR sensor)
 {
     switch (sensor)
     {
-    case LeftIR:
+    case LEFTIR:
         return digitalRead(LEFT_IR) == HIGH;
-    case RightIR:
+    case RIGHTIR:
         return digitalRead(RIGHT_IR) == HIGH;
     default:
         return false;
@@ -119,15 +119,15 @@ bool PikaBot::isPressed()
 
 void PikaBot::lineFollow(uint8_t speed)
 {
-    if (!this->detectLine(LeftIR) && !this->detectLine(RightIR))
+    if (!this->detectLine(LEFTIR) && !this->detectLine(RIGHTIR))
     {
         this->moveForward(speed);
     }
-    else if (this->detectLine(LeftIR))
+    else if (this->detectLine(LEFTIR))
     {
         this->turnLeft(speed);
     }
-    else if (this->detectLine(RightIR))
+    else if (this->detectLine(RIGHTIR))
     {
         this->turnRight(speed);
     }

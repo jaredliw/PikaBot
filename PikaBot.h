@@ -6,19 +6,19 @@
 
 enum Duration
 {
-    Whole,
-    Half,
-    Quarter,
-    Eighth,
-    Sixteenth,
-    Double,
-    Breve,
+    WHOLE,
+    HALF,
+    QUARTER,
+    EIGHTH,
+    SIXTEENTH,
+    DOUBLE,
+    BREVE,
 };
 
 enum IR
 {
-    LeftIR,
-    RightIR,
+    LEFTIR,
+    RIGHTIR,
 };
 
 int pitchToFreq(String pitch);
