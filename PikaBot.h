@@ -39,6 +39,7 @@ public:
     void play(String musicSheet);
     void playTone(String pitch, uint8_t note);
     void playToneMs(String pitch, unsigned long duration);
+    void resetTempo();
     void stop();
     void turnLeft(uint8_t speed);
     void turnLeft(uint8_t speed, uint8_t angle);

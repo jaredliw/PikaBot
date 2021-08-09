@@ -254,6 +254,11 @@ void PikaBot::playToneMs(String pitch, unsigned long duration)
     noTone(BUZZER);
 }
 
+void PikaBot::resetTempo()
+{
+    this->tempo = 120;
+}
+
 void PikaBot::stop()
 {
     this->move(0, 0);
