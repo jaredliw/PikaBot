@@ -11,7 +11,7 @@ moveForward	KEYWORD2
 play	KEYWORD2
 playTone	KEYWORD2
 playToneMs	KEYWORD2
-setTempo	KEYWORD2
+resetTempo	KEYWORD2
 stop	KEYWORD2
 turnLeft	KEYWORD2
 turnRight	KEYWORD2
