@@ -140,6 +140,8 @@ void PikaBot::lineFollow(uint8_t speed)
 void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
 {
     while (this->lastMotorInstructionTime != 0 and millis() < lastMotorInstructionTime + DELAY) {}
+    Serial.begin(9600);
+    Serial.println(leftSpeed);
     if (leftSpeed > 255)
     {
         leftSpeed = 255;
@@ -281,7 +283,7 @@ void PikaBot::turnLeft(uint8_t speed, uint8_t angle)
 
 void PikaBot::turnRight(uint8_t speed)
 {
-    this->move(-speed, speed);
+    this->move(0, speed);
 }
 
 void PikaBot::turnRight(uint8_t speed, uint8_t angle)
