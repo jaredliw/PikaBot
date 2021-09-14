@@ -213,6 +213,7 @@ void PikaBot::play(String musicSheet)
 {
     musicSheet += ' ';
     int lastSpacePos = -1;
+    int lastOctave = 4;
     int lastNote = QUARTER;
     while (true)
     {
@@ -234,6 +235,15 @@ void PikaBot::play(String musicSheet)
             pitch = musicSheet.substring(lastSpacePos + 1, spacePos);
             note = String(lastNote);
         }
+        int intOctave = lastOctave;
+        if (isDigit(pitch[pitch.length() - 1]))
+        {
+            intOctave = String(pitch[pitch.length() - 1]).toInt();
+        }
+        else if (!pitch.equals("R") && !pitch.equals("r"))
+        {
+            pitch += intOctave;
+        }
         int intNote = note.toInt();
         lastSpacePos = spacePos;
         if ((!String(intNote).equals(note)) || intNote <= 0)
@@ -241,6 +251,7 @@ void PikaBot::play(String musicSheet)
             continue;
         }
         this->playTone(pitch, intNote);
+        lastOctave = intOctave;
         lastNote = intNote;
     }
 }
