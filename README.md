@@ -62,7 +62,10 @@ You are ready to go!
 
 - **The robot is not following the line.**
 
-  You may need to calibrate your line sensors using a screwdriver. Refer to the booklet for more inforamation.
+  Try to:
+  
+  - Calibrate your line sensors using a screwdriver. Refer to the booklet for more information.
+  - Reduce 
 
 ## Report a Problem
 
