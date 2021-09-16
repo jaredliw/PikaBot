@@ -42,9 +42,13 @@ public:
     void resetTempo();
     void stop();
     void turnLeft(int speed);
+    void turnLeft(int speed, bool reverse);
     void turnLeft(int speed, int angle);
+    void turnLeft(int speed, int angle, bool reverse);
     void turnRight(int speed);
+    void turnRight(int speed, bool reverse);
     void turnRight(int speed, int angle);
+    void turnRight(int speed, int angle, bool reverse);
     unsigned int ultrasonicDistance();
 
 private:

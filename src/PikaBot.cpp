@@ -286,7 +286,22 @@ void PikaBot::stop()
 void PikaBot::turnLeft(int speed)
 {
     if (not this->_isBetween(speed, 0, 255)) return;
+
     this->move(speed, 0);
+}
+
+void PikaBot::turnLeft(int speed, bool reverse)
+{
+    if (reverse)
+    {
+        if (not this->_isBetween(speed, 0, 255)) return;
+
+        this->move(0, -speed);
+    }
+    else
+    {
+        this->turnLeft(speed);
+    }
 }
 
 void PikaBot::turnLeft(int speed, int angle)
@@ -295,15 +310,42 @@ void PikaBot::turnLeft(int speed, int angle)
     this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
 }
 
+void PikaBot::turnLeft(int speed, int angle, bool reverse)
+{
+    this->turnLeft(speed, reverse);
+    this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
+}
+
 void PikaBot::turnRight(int speed)
 {
     if (not this->_isBetween(speed, 0, 255)) return;
+
     this->move(0, speed);
+}
+
+void PikaBot::turnRight(int speed, bool reverse)
+{
+    if (reverse)
+    {
+        if (not this->_isBetween(speed, 0, 255)) return;
+
+        this->move(-speed, 0);
+    }
+    else
+    {
+        this->turnRight(speed);
+    }
 }
 
 void PikaBot::turnRight(int speed, int angle)
 {
     this->turnRight(speed);
+    this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
+}
+
+void PikaBot::turnRight(int speed, int angle, bool reverse)
+{
+    this->turnRight(speed, reverse);
     this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
 }
 
