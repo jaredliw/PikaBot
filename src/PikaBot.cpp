@@ -78,15 +78,24 @@ PikaBot::PikaBot(void)
 
 void PikaBot::_delayMotors(int speed, double distance)
 {
-    if (distance > 0)
-    {
-        delay((int) round((double) distance / this->_distanceRef * speed / this->_speedRef * this->_delayRef));
-        this->stop();
-    }
+    if (not this->_isBetween(speed, 0, 255)) return;
+    if (distance <= 0) return;
+
+    delay((int) round((double) distance / this->_distanceRef * speed / this->_speedRef * this->_delayRef));
+    this->stop();
+}
+
+bool PikaBot::_isBetween(int value, int lowerBound, int upperBound)
+{
+    return lowerBound <= value and value <= upperBound;
 }
 
 void PikaBot::calibrateMotors(int speed, int delay, int distance)
 {
+    if (not this->_isBetween(speed, 0, 255)) return;
+    if (delay <= 0) return;
+    if (distance <= 0) return;
+
     this->_speedRef = speed;
     this->_delayRef = delay;
     this->_distanceRef = distance;
@@ -119,6 +128,8 @@ bool PikaBot::isPressed()
 
 void PikaBot::lineFollow(int speed)
 {
+    if (not this->_isBetween(speed, 0, 255)) return;
+
     if (this->detectLine(LEFTIR) && this->detectLine(RIGHTIR))
     {
         this->stop();
@@ -140,22 +151,8 @@ void PikaBot::lineFollow(int speed)
 void PikaBot::move(int leftSpeed, int rightSpeed)
 {
     while (this->lastMotorInstructionTime != 0 and millis() < lastMotorInstructionTime + DELAY) {}
-    if (leftSpeed > 255)
-    {
-        leftSpeed = 255;
-    }
-    else if (leftSpeed < -255)
-    {
-        leftSpeed = -255;
-    }
-    if (rightSpeed > 255)
-    {
-        rightSpeed = 255;
-    }
-    else if (rightSpeed < -255)
-    {
-        rightSpeed = -255;
-    }
+
+    if (not this->_isBetween(leftSpeed, -255, 255) or not this->_isBetween(rightSpeed, -255, 255)) return;
 
     if (leftSpeed == 0)
     {
@@ -189,6 +186,8 @@ void PikaBot::move(int leftSpeed, int rightSpeed)
 
 void PikaBot::moveBackward(int speed)
 {
+    if (not this->_isBetween(speed, 0, 255)) return;
+
     this->move(-speed, -speed);
 }
 
@@ -200,6 +199,8 @@ void PikaBot::moveBackward(int speed, int distance)
 
 void PikaBot::moveForward(int speed)
 {
+    if (not this->_isBetween(speed, 0, 255)) return;
+
     this->move(speed, speed);
 }
 
@@ -258,11 +259,14 @@ void PikaBot::play(String musicSheet)
 
 void PikaBot::playTone(String pitch, int note)
 {
+    if (not this->_isBetween(note, 1, 256)) return;
+
     this->playToneMs(pitch, round(240000. / this->tempo / note));
 }
 
 void PikaBot::playToneMs(String pitch, long duration)
 {
+    // Negative duration = forever
     int freq = pitchToFreq(pitch);
     tone(BUZZER, freq, duration);
     delay(duration * 1.3);
@@ -281,6 +285,7 @@ void PikaBot::stop()
 
 void PikaBot::turnLeft(int speed)
 {
+    if (not this->_isBetween(speed, 0, 255)) return;
     this->move(speed, 0);
 }
 
@@ -292,6 +297,7 @@ void PikaBot::turnLeft(int speed, int angle)
 
 void PikaBot::turnRight(int speed)
 {
+    if (not this->_isBetween(speed, 0, 255)) return;
     this->move(0, speed);
 }
 
@@ -301,14 +307,14 @@ void PikaBot::turnRight(int speed, int angle)
     this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
 }
 
-int PikaBot::ultrasonicDistance()
+unsigned int PikaBot::ultrasonicDistance()
 {
     digitalWrite(ULTRASONIC_TRIG, LOW);
     delayMicroseconds(2);
     digitalWrite(ULTRASONIC_TRIG, HIGH);
     delayMicroseconds(10);
     digitalWrite(ULTRASONIC_TRIG, LOW);
-    int distance = pulseIn(ULTRASONIC_ECHO, HIGH) * 0.017;
+    unsigned int distance = pulseIn(ULTRASONIC_ECHO, HIGH) * 0.017;
     if (distance > 2000)
     {
         return 0;

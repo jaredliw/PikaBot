@@ -45,7 +45,7 @@ public:
     void turnLeft(int speed, int angle);
     void turnRight(int speed);
     void turnRight(int speed, int angle);
-    int ultrasonicDistance();
+    unsigned int ultrasonicDistance();
 
 private:
     int _delayRef = 500;
@@ -53,6 +53,7 @@ private:
     int _speedRef = 255;
     unsigned long lastMotorInstructionTime = 0;
     void _delayMotors(int speed, double distance);
+    bool _isBetween(int value, int lowerBound, int upperBound);
 };
 
 #endif
