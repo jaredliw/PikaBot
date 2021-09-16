@@ -76,7 +76,7 @@ PikaBot::PikaBot(void)
     pinMode(RIGHT_IR, INPUT);
 }
 
-void PikaBot::_delayMotors(uint8_t speed, double distance)
+void PikaBot::_delayMotors(int speed, double distance)
 {
     if (distance > 0)
     {
@@ -85,7 +85,7 @@ void PikaBot::_delayMotors(uint8_t speed, double distance)
     }
 }
 
-void PikaBot::calibrateMotors(uint8_t speed, uint16_t delay, uint8_t distance)
+void PikaBot::calibrateMotors(int speed, int delay, int distance)
 {
     this->_speedRef = speed;
     this->_delayRef = delay;
@@ -117,7 +117,7 @@ bool PikaBot::isPressed()
     }
 }
 
-void PikaBot::lineFollow(uint8_t speed)
+void PikaBot::lineFollow(int speed)
 {
     if (this->detectLine(LEFTIR) && this->detectLine(RIGHTIR))
     {
@@ -137,7 +137,7 @@ void PikaBot::lineFollow(uint8_t speed)
     }
 }
 
-void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
+void PikaBot::move(int leftSpeed, int rightSpeed)
 {
     while (this->lastMotorInstructionTime != 0 and millis() < lastMotorInstructionTime + DELAY) {}
     if (leftSpeed > 255)
@@ -187,23 +187,23 @@ void PikaBot::move(int16_t leftSpeed, int16_t rightSpeed)
     lastMotorInstructionTime = millis();
 }
 
-void PikaBot::moveBackward(uint8_t speed)
+void PikaBot::moveBackward(int speed)
 {
     this->move(-speed, -speed);
 }
 
-void PikaBot::moveBackward(uint8_t speed, uint8_t distance)
+void PikaBot::moveBackward(int speed, int distance)
 {
     this->moveBackward(speed);
     this->_delayMotors(speed, distance);
 }
 
-void PikaBot::moveForward(uint8_t speed)
+void PikaBot::moveForward(int speed)
 {
     this->move(speed, speed);
 }
 
-void PikaBot::moveForward(uint8_t speed, uint8_t distance)
+void PikaBot::moveForward(int speed, int distance)
 {
     this->moveForward(speed);
     this->_delayMotors(speed, distance);
@@ -256,12 +256,12 @@ void PikaBot::play(String musicSheet)
     }
 }
 
-void PikaBot::playTone(String pitch, uint8_t note)
+void PikaBot::playTone(String pitch, int note)
 {
     this->playToneMs(pitch, round(240000. / this->tempo / note));
 }
 
-void PikaBot::playToneMs(String pitch, unsigned long duration)
+void PikaBot::playToneMs(String pitch, long duration)
 {
     int freq = pitchToFreq(pitch);
     tone(BUZZER, freq, duration);
@@ -279,36 +279,36 @@ void PikaBot::stop()
     this->move(0, 0);
 }
 
-void PikaBot::turnLeft(uint8_t speed)
+void PikaBot::turnLeft(int speed)
 {
     this->move(speed, 0);
 }
 
-void PikaBot::turnLeft(uint8_t speed, uint8_t angle)
+void PikaBot::turnLeft(int speed, int angle)
 {
     this->turnLeft(speed);
     this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
 }
 
-void PikaBot::turnRight(uint8_t speed)
+void PikaBot::turnRight(int speed)
 {
     this->move(0, speed);
 }
 
-void PikaBot::turnRight(uint8_t speed, uint8_t angle)
+void PikaBot::turnRight(int speed, int angle)
 {
     this->turnRight(speed);
     this->_delayMotors(speed, 2 * PI * WIDTH * angle / 360);
 }
 
-uint16_t PikaBot::ultrasonicDistance()
+int PikaBot::ultrasonicDistance()
 {
     digitalWrite(ULTRASONIC_TRIG, LOW);
     delayMicroseconds(2);
     digitalWrite(ULTRASONIC_TRIG, HIGH);
     delayMicroseconds(10);
     digitalWrite(ULTRASONIC_TRIG, LOW);
-    uint16_t distance = pulseIn(ULTRASONIC_ECHO, HIGH) * 0.017;
+    int distance = pulseIn(ULTRASONIC_ECHO, HIGH) * 0.017;
     if (distance > 2000)
     {
         return 0;
