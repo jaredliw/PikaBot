@@ -11,17 +11,13 @@ An Arduino library for controlling PikaBot. This library allows you to program y
 
 ### Download from  Arduino Library Manager  (Recommended)
 
-In Arduino IDE, go to **Tools > Manage Libraries...** and search for "**PikaBot**". Click "**Install**" and then "**Close**" after it is done.
+In Arduino IDE, go to **Tools > Manage Libraries...** and search for "**Pikabot**". Click "**Install**" and then "**Close**" after it is done.
 
 ### Manual download
 
-Download the ZIP file [here](https://github.com/jaredliw/PikaBot/archive/refs/heads/master.zip). Unzip it and place it under **Documents\Arduino\libraries** (The folder should be named as "**PikaBot**").
+Download the ZIP file [here](https://github.com/jaredliw/PikaBot/archive/refs/heads/master.zip). Unzip it and place it under **Documents\Arduino\libraries** (The folder should be named as "**Pikabot**").
 
 You are ready to go!
-
-## Documentation
-
-*Will be updated soon.*
 
 ## Troubleshooting Guide
 
@@ -52,24 +48,22 @@ You are ready to go!
 
 - **The robot does not move for the distance specified.** OR **The robot does not rotate by the angle specified.**
 
-  Due to technical constraints, ± 3 cm or ± 10° of difference is unavoidable. If it does differ a lot, please measure the distance/angle manually and parse the values to function `calibrateMotors` before using motors.
+  Due to technical constraints, ± 3 cm or ± 10° of difference is unavoidable. If it does differ a lot, please measure the distance/angle manually and parse the values to function `calibrateMotors` before using motors. See how to use this function in **File > Examples > Pikabot > Motor**.
 
 - **Some notes are missed when playing music using buzzer.**
 
   Invalid notes/pitches/notations will be skipped. Check your code again.
-
-  (If it makes a strange pitch rather than skipping it, kindly report it to me.)
 
 - **The robot is not following the line.**
 
   Try to:
   
   - Calibrate your line sensors using a screwdriver. Refer to the booklet for more information.
-  - Reduce 
+  - Reduce the speed (around 90 is recommended).
 
 ## Report a Problem
 
-Something isn't working as expected? You are welcome to [open an issue](https://github.com/jaredliw/PikaBot/issues) to make this library better! Before opening an issue, make sure that you have read the [troubleshooting guide]().
+Something isn't working as expected? You are welcome to [open an issue](https://github.com/jaredliw/PikaBot/issues) to make this library better! Before opening an issue, make sure that you have read the [troubleshooting guide](https://github.com/jaredliw/PikaBot#troubleshooting-guide).
 
 ## Sponsorship
 
