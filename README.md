@@ -1,5 +1,5 @@
 # PikaBot
-An Arduino library for controlling PikaBot. This library allows you to program your PikaBot in a fast and easy way without getting too deep into electronics and programming.
+An Arduino library for PikaBot. This library allows you to program your PikaBot in a fast and easy way without getting too deep into electronics and programming.
 
 ## Introduction
 
@@ -9,7 +9,7 @@ An Arduino library for controlling PikaBot. This library allows you to program y
 
 ## Installation
 
-### Download from  Arduino Library Manager  (Recommended)
+### Download from  Arduino Library Manager (Recommended)
 
 In Arduino IDE, go to **Tools > Manage Libraries...** and search for "**Pikabot**". Click "**Install**" and then "**Close**" after it is done.
 
@@ -25,8 +25,8 @@ You are ready to go!
 
   Make sure that you have:
 
-  - install CH340 Driver in order to program [Maker UNO](https://my.cytron.io/p-maker-uno). ("**Cytron Motor Drivers Library**" is not necessary to be installed.)
-  - configure the correct COM port.
+  - installed CH340 Driver in order to program [Maker UNO](https://my.cytron.io/p-maker-uno). ("**Cytron Motor Drivers Library**" is not necessarily to be installed.)
+  - configured the correct COM port.
 
   Refer to the booklet for more information.
 
@@ -48,7 +48,7 @@ You are ready to go!
 
 - **The robot does not move for the distance specified.** OR **The robot does not rotate by the angle specified.**
 
-  Due to technical constraints, ± 3 cm or ± 10° of difference is unavoidable. If it does differ a lot, please measure the distance/angle manually and parse the values to function `calibrateMotors` before using motors. See how to use this function in **File > Examples > Pikabot > Motor**.
+  Due to technical constraints, ± 3 cm or ± 10° of deviation is unavoidable. If it does differ a lot, please measure the distance/angle manually and parse the values to function `calibrateMotors` before using motors. See how to use this function in **File > Examples > Pikabot > Motor**.
 
 - **Some notes are missed when playing music using buzzer.**
 
